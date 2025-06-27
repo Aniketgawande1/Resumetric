@@ -1,0 +1,9 @@
+Flask
+Flask-Cors
+Flask-Mail
+Flask-JWT-Extended
+python-dotenv
+PyMuPDF
+spacy
+scikit-learn
+google-generativeai
