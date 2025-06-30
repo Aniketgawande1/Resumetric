@@ -1,8 +1,11 @@
 import google.generativeai as genai
 import os
 
-genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
-model = genai.GenerativeModel("gemini-pro")
+genai.configure(api_key=os.getenv("AIzaSyAJlbXwlsKB-u2WWP14NLt4TvAK6DRFbuc"))
+model = genai.GenerativeModel("gemini-1.5-flash")
+ # ✅ works
+
+
 
 def get_resume_feedback(resume, jd):
     prompt = f"""

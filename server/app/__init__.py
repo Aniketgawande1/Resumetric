@@ -2,6 +2,7 @@ from flask import Flask
 from flask_cors import CORS
 from flask_mail import Mail
 from flask_jwt_extended import JWTManager
+from pymongo import MongoClient
 import os
 from dotenv import load_dotenv
 
@@ -20,6 +21,12 @@ def create_app():
     app.config['MAIL_USERNAME'] = os.getenv("EMAIL_USER")
     app.config['MAIL_PASSWORD'] = os.getenv("EMAIL_PASS")
 
+    # ✅ Proper MongoDB setup
+    mongo_uri = os.getenv("MONGO_URI")  # must include cluster and credentials
+    mongo_db_name = os.getenv("MONGO_DB")  # e.g., "resumetric"
+    client = MongoClient(mongo_uri)
+    app.mongo = client[mongo_db_name]  # ✅ This avoids get_default_database()
+
     mail.init_app(app)
     jwt.init_app(app)
 
@@ -29,4 +36,3 @@ def create_app():
     app.register_blueprint(routes_bp, url_prefix='/api')
 
     return app
-
