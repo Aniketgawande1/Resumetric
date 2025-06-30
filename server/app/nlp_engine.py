@@ -21,3 +21,4 @@ def analyze_resume(resume, job_desc):
     missing = jd_tokens - resume_tokens
 
     return score, missing
+0
