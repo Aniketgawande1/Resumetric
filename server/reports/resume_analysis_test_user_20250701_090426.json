@@ -1,0 +1,60 @@
+{
+  "user_id": "test_user",
+  "user_email": "test@example.com",
+  "resume_filename": "aniketresume.pdf",
+  "job_title": "Backend Developer",
+  "company_name": "Tech Company",
+  "analysis_date": "2025-07-01T09:04:26.443558",
+  "similarity_score": 0.068,
+  "missing_keywords": [
+    "familiarity",
+    "platform",
+    "familiar",
+    "gcp",
+    "docker",
+    "aw",
+    "plus",
+    "candidate",
+    "database",
+    "postgresql",
+    "backend"
+  ],
+  "matched_keywords": [
+    "technology",
+    "rest",
+    "cloud",
+    "apis",
+    "experience",
+    "developer",
+    "python",
+    "mongodb",
+    "git",
+    "system",
+    "authentication"
+  ],
+  "ai_feedback": [
+    "Highlight Backend Skills and Experience",
+    "Quantify Achievements",
+    "Streamline and Refocus the Summary"
+  ],
+  "suggestions": [
+    "Consider restructuring your resume to better align with the job description",
+    "Review the job requirements and add relevant experience",
+    "Add these important keywords: familiarity, platform, familiar, gcp, docker",
+    "Include more technical skills mentioned in the job description",
+    "Consider highlighting transferable skills if you lack direct experience",
+    "Use action verbs and quantifiable achievements",
+    "Tailor your resume summary to match the job requirements",
+    "Include relevant certifications or courses"
+  ],
+  "overall_rating": "Needs Improvement",
+  "strengths": [
+    "Strong keyword alignment with job requirements",
+    "Relevant skills found: technology, rest, cloud"
+  ],
+  "weaknesses": [
+    "Missing several important keywords",
+    "Low content similarity with job description",
+    "Missing key requirements: familiarity, platform, familiar"
+  ]
+}

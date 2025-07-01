@@ -1,0 +1,77 @@
+{
+  "user_id": "test",
+  "user_email": "test@example.com",
+  "resume_filename": "aniketresume.pdf",
+  "job_title": "Job Analysis",
+  "company_name": null,
+  "analysis_date": "2025-07-01T09:01:36.012273",
+  "similarity_score": 0.067,
+  "missing_keywords": [
+    "familiarity",
+    "platform",
+    "familiar",
+    "gcp",
+    "docker",
+    "aw",
+    "plus",
+    "candidate",
+    "database",
+    "postgresql",
+    "backend"
+  ],
+  "matched_keywords": [
+    "technology",
+    "rest",
+    "cloud",
+    "apis",
+    "experience",
+    "developer",
+    "python",
+    "mongodb",
+    "git",
+    "system",
+    "authentication"
+  ],
+  "ai_feedback": [
+    "Aniket's resume shows strong full-stack skills, but needs refocusing to better target the backend developer role. Here are three improvement suggestions:",
+    "",
+    "1. **Highlight Backend Skills and Experience:** The resume heavily emphasizes frontend technologies (React, Next.js, etc.). While Java and Python are listed under \"Languages,\"  Aniket needs to demonstrate *practical experience* with them in a backend context.  The projects section should be revised to explicitly call out backend responsibilities.  For example:",
+    "",
+    "    * **Instead of:** \"URL Shortener - A web application built using Node.js and Express.js...\"",
+    "    * **Try:** \"URL Shortener - Developed the RESTful API backend using Node.js and Express.js, handling URL shortening, link management, and click tracking. Implemented [mention specific technologies used like database interaction, authentication method].  Frontend developed using [mention technologies].\"",
+    "",
+    "    Repeat this for other projects, emphasizing any use of Python, Java, REST APIs, authentication, PostgreSQL or MongoDB.  If a project didn't involve these technologies, consider removing it or relegating it to a less prominent section.",
+    "",
+    "",
+    "2. **Quantify Achievements:** The resume mentions participation in hackathons and open-source contributions, but lacks quantifiable results.  Instead of \"enhanced functionality,\" say something like \"Improved API response time by 15% by implementing [specific technique] in the NextUp project.\"  Similarly, for the GitHub certification, focus on what that score *demonstrates* in terms of practical skills relevant to the job (e.g., \"Proficient in Git workflows, including branching strategies and collaborative development\").",
+    "",
+    "",
+    "3. **Streamline and Refocus the Summary:** The current summary is generic. It should be a concise, targeted statement highlighting 2-3 key skills and experiences that directly address the job description.  For example:",
+    "",
+    "    * **Instead of:**  \"A developer proficient in building full-stack applications and CLI tools...\"",
+    "    * **Try:** \"Results-oriented backend developer with experience in building RESTful APIs using Java and Python.  Proficient in database technologies (MongoDB) and experienced with Git, Docker, and cloud deployment strategies. Seeking a challenging role where I can leverage my skills to develop scalable and robust applications.\"",
+    "",
+    "",
+    "By making these changes, Aniket will create a resume that is much more effective in showcasing his relevant skills and experience for a backend developer position.  Remember to tailor the resume to each specific job application, further emphasizing skills most relevant to that particular role."
+  ],
+  "suggestions": [
+    "Consider restructuring your resume to better align with the job description",
+    "Review the job requirements and add relevant experience",
+    "Add these important keywords: familiarity, platform, familiar, gcp, docker",
+    "Include more technical skills mentioned in the job description",
+    "Consider highlighting transferable skills if you lack direct experience",
+    "Use action verbs and quantifiable achievements",
+    "Tailor your resume summary to match the job requirements",
+    "Include relevant certifications or courses"
+  ],
+  "overall_rating": "Needs Improvement",
+  "strengths": [
+    "Strong keyword alignment with job requirements",
+    "Relevant skills found: technology, rest, cloud"
+  ],
+  "weaknesses": [
+    "Missing several important keywords",
+    "Low content similarity with job description",
+    "Missing key requirements: familiarity, platform, familiar"
+  ]
+}
