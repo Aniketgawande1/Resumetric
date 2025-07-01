@@ -1,0 +1,76 @@
+{
+  "user_id": "test",
+  "user_email": "test@example.com",
+  "resume_filename": "aniketresume.pdf",
+  "job_title": "Job Analysis",
+  "company_name": null,
+  "analysis_date": "2025-07-01T18:44:30.966642",
+  "similarity_score": 0.067,
+  "missing_keywords": [
+    "database",
+    "familiar",
+    "familiarity",
+    "platform",
+    "gcp",
+    "docker",
+    "backend",
+    "plus",
+    "candidate",
+    "postgresql",
+    "aw"
+  ],
+  "matched_keywords": [
+    "git",
+    "cloud",
+    "system",
+    "python",
+    "technology",
+    "developer",
+    "authentication",
+    "mongodb",
+    "rest",
+    "experience",
+    "apis"
+  ],
+  "ai_feedback": [
+    "Aniket's resume demonstrates strong full-stack skills, but needs adjustments to better target the backend-focused job description. Here are three improvement suggestions:",
+    "",
+    "1. **Highlight Backend Experience and Skills:** The resume heavily emphasizes front-end technologies (React, NextJS, etc.).  While Java and Python are listed under \"Languages,\"  Aniket needs to actively demonstrate backend experience using those languages.  He should:",
+    "",
+    "    * **Re-order the Skills section:** Place Java and Python higher, ideally before JavaScript.",
+    "    * **Refocus Project Descriptions:**  Instead of solely mentioning the front-end framework used in each project, emphasize the backend components. For example, for the URL shortener, detail the API endpoints, database interactions (using MongoDB as per the job description), and any authentication implemented.  Similarly, for the \"Amazon Clone,\" focus on how authentication, product listings, and shopping cart functionality were implemented on the backend using Java or Python (if applicable – if Firebase handled all backend, this project should be de-emphasized).  Quantify achievements wherever possible (e.g., \"Implemented REST API with X endpoints, handling Y requests per second\").",
+    "    * **Add a dedicated \"Backend Projects\" section (optional):** This could separate his backend work from the front-end projects, making it easier for recruiters to quickly identify relevant experience.",
+    "",
+    "2. **Address the Missing Technologies:** The job description mentions PostgreSQL as a desired database technology, and AWS/GCP cloud platforms. Aniket should:",
+    "",
+    "    * **Add PostgreSQL to his skills:** If he has experience with PostgreSQL, he should add it to his \"Technologies & Tools\" section.  If not, he should consider learning the basics, as it's a highly relevant skill.",
+    "    * **Mention cloud experience (if any):** Even a small project deployed on AWS or GCP would significantly boost his application. If he lacks this experience, he can briefly mention his interest in learning these platforms in his summary or cover letter.",
+    "",
+    "3. **Improve the Summary and Quantify Achievements:** The summary is generic. He needs to tailor it to the job description:",
+    "",
+    "    * **Quantify accomplishments:** Instead of general statements, use numbers to highlight achievements. For example, instead of \"A developer proficient in building full-stack applications,\" try \"Backend developer with experience building and deploying RESTful APIs using Java and Python, handling up to X requests per second.\"",
+    "    * **Keywords:**  Incorporate keywords from the job description (REST APIs, authentication, PostgreSQL, MongoDB, Python, Java, Docker, AWS/GCP) strategically into the summary and project descriptions.  This helps Applicant Tracking Systems (ATS) find his resume.  Currently, his summary lacks these keywords almost entirely.",
+    "",
+    "By implementing these changes, Aniket can significantly improve his resume's effectiveness in securing a backend developer position.  The key is to shift the emphasis from his impressive full-stack abilities towards the specific backend skills and technologies sought by the employer."
+  ],
+  "suggestions": [
+    "Consider restructuring your resume to better align with the job description",
+    "Review the job requirements and add relevant experience",
+    "Add these important keywords: database, familiar, familiarity, platform, gcp",
+    "Include more technical skills mentioned in the job description",
+    "Consider highlighting transferable skills if you lack direct experience",
+    "Use action verbs and quantifiable achievements",
+    "Tailor your resume summary to match the job requirements",
+    "Include relevant certifications or courses"
+  ],
+  "overall_rating": "Needs Improvement",
+  "strengths": [
+    "Strong keyword alignment with job requirements",
+    "Relevant skills found: git, cloud, system"
+  ],
+  "weaknesses": [
+    "Missing several important keywords",
+    "Low content similarity with job description",
+    "Missing key requirements: database, familiar, familiarity"
+  ]
+}

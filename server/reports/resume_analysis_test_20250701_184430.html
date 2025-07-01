@@ -1,0 +1,168 @@
+
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Resume Analysis Report - test@example.com</title>
+            <style>
+                body {
+                    font-family: 'Arial', sans-serif;
+                    line-height: 1.6;
+                    margin: 0;
+                    padding: 20px;
+                    background-color: #f5f5f5;
+                }
+                .container {
+                    max-width: 800px;
+                    margin: 0 auto;
+                    background: white;
+                    padding: 30px;
+                    border-radius: 10px;
+                    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+                }
+                .header {
+                    text-align: center;
+                    border-bottom: 3px solid #007bff;
+                    padding-bottom: 20px;
+                    margin-bottom: 30px;
+                }
+                .score-card {
+                    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                    color: white;
+                    padding: 20px;
+                    border-radius: 10px;
+                    text-align: center;
+                    margin-bottom: 20px;
+                }
+                .rating {
+                    background-color: #F44336;
+                    color: white;
+                    padding: 10px 20px;
+                    border-radius: 25px;
+                    display: inline-block;
+                    font-weight: bold;
+                    margin: 10px 0;
+                }
+                .section {
+                    margin-bottom: 25px;
+                    padding: 15px;
+                    border-left: 4px solid #007bff;
+                    background-color: #f8f9fa;
+                }
+                .section h3 {
+                    color: #333;
+                    margin-top: 0;
+                }
+                .keywords {
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: 8px;
+                    margin-top: 10px;
+                }
+                .keyword {
+                    background-color: #007bff;
+                    color: white;
+                    padding: 5px 10px;
+                    border-radius: 15px;
+                    font-size: 12px;
+                }
+                .missing-keyword {
+                    background-color: #dc3545;
+                }
+                .matched-keyword {
+                    background-color: #28a745;
+                }
+                .suggestion, .feedback {
+                    background-color: #fff3cd;
+                    border: 1px solid #ffeaa7;
+                    border-radius: 5px;
+                    padding: 10px;
+                    margin: 5px 0;
+                }
+                .strength {
+                    background-color: #d4edda;
+                    border: 1px solid #c3e6cb;
+                    border-radius: 5px;
+                    padding: 8px;
+                    margin: 3px 0;
+                }
+                .weakness {
+                    background-color: #f8d7da;
+                    border: 1px solid #f5c6cb;
+                    border-radius: 5px;
+                    padding: 8px;
+                    margin: 3px 0;
+                }
+                .footer {
+                    text-align: center;
+                    margin-top: 30px;
+                    color: #666;
+                    font-size: 12px;
+                }
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <div class="header">
+                    <h1>📄 Resume Analysis Report</h1>
+                    <p><strong>Resumetric</strong> - AI-Powered Resume Optimization</p>
+                </div>
+                
+                <div class="score-card">
+                    <h2>Overall Similarity Score</h2>
+                    <h1>6.7%</h1>
+                    <div class="rating">Needs Improvement</div>
+                </div>
+                
+                <div class="section">
+                    <h3>📋 Analysis Details</h3>
+                    <p><strong>User:</strong> test@example.com</p>
+                    <p><strong>Resume:</strong> aniketresume.pdf</p>
+                    <p><strong>Job Title:</strong> Job Analysis</p>
+                    
+                    <p><strong>Analysis Date:</strong> 2025-07-01T18:44:30.966642</p>
+                </div>
+                
+                <div class="section">
+                    <h3>✅ Strengths</h3>
+                    <div class="strength">• Strong keyword alignment with job requirements</div><div class="strength">• Relevant skills found: git, cloud, system</div>
+                </div>
+                
+                <div class="section">
+                    <h3>⚠️ Areas for Improvement</h3>
+                    <div class="weakness">• Missing several important keywords</div><div class="weakness">• Low content similarity with job description</div><div class="weakness">• Missing key requirements: database, familiar, familiarity</div>
+                </div>
+                
+                <div class="section">
+                    <h3>🎯 Matched Keywords</h3>
+                    <div class="keywords">
+                        <span class="keyword matched-keyword">git</span><span class="keyword matched-keyword">cloud</span><span class="keyword matched-keyword">system</span><span class="keyword matched-keyword">python</span><span class="keyword matched-keyword">technology</span><span class="keyword matched-keyword">developer</span><span class="keyword matched-keyword">authentication</span><span class="keyword matched-keyword">mongodb</span><span class="keyword matched-keyword">rest</span><span class="keyword matched-keyword">experience</span>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h3>❌ Missing Keywords</h3>
+                    <div class="keywords">
+                        <span class="keyword missing-keyword">database</span><span class="keyword missing-keyword">familiar</span><span class="keyword missing-keyword">familiarity</span><span class="keyword missing-keyword">platform</span><span class="keyword missing-keyword">gcp</span><span class="keyword missing-keyword">docker</span><span class="keyword missing-keyword">backend</span><span class="keyword missing-keyword">plus</span><span class="keyword missing-keyword">candidate</span><span class="keyword missing-keyword">postgresql</span><span class="keyword missing-keyword">aw</span>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h3>💡 AI-Generated Feedback</h3>
+                    <div class="feedback">• Aniket's resume demonstrates strong full-stack skills, but needs adjustments to better target the backend-focused job description. Here are three improvement suggestions:</div><div class="feedback">• </div><div class="feedback">• 1. **Highlight Backend Experience and Skills:** The resume heavily emphasizes front-end technologies (React, NextJS, etc.).  While Java and Python are listed under "Languages,"  Aniket needs to actively demonstrate backend experience using those languages.  He should:</div><div class="feedback">• </div><div class="feedback">•     * **Re-order the Skills section:** Place Java and Python higher, ideally before JavaScript.</div><div class="feedback">•     * **Refocus Project Descriptions:**  Instead of solely mentioning the front-end framework used in each project, emphasize the backend components. For example, for the URL shortener, detail the API endpoints, database interactions (using MongoDB as per the job description), and any authentication implemented.  Similarly, for the "Amazon Clone," focus on how authentication, product listings, and shopping cart functionality were implemented on the backend using Java or Python (if applicable – if Firebase handled all backend, this project should be de-emphasized).  Quantify achievements wherever possible (e.g., "Implemented REST API with X endpoints, handling Y requests per second").</div><div class="feedback">•     * **Add a dedicated "Backend Projects" section (optional):** This could separate his backend work from the front-end projects, making it easier for recruiters to quickly identify relevant experience.</div><div class="feedback">• </div><div class="feedback">• 2. **Address the Missing Technologies:** The job description mentions PostgreSQL as a desired database technology, and AWS/GCP cloud platforms. Aniket should:</div><div class="feedback">• </div><div class="feedback">•     * **Add PostgreSQL to his skills:** If he has experience with PostgreSQL, he should add it to his "Technologies & Tools" section.  If not, he should consider learning the basics, as it's a highly relevant skill.</div><div class="feedback">•     * **Mention cloud experience (if any):** Even a small project deployed on AWS or GCP would significantly boost his application. If he lacks this experience, he can briefly mention his interest in learning these platforms in his summary or cover letter.</div><div class="feedback">• </div><div class="feedback">• 3. **Improve the Summary and Quantify Achievements:** The summary is generic. He needs to tailor it to the job description:</div><div class="feedback">• </div><div class="feedback">•     * **Quantify accomplishments:** Instead of general statements, use numbers to highlight achievements. For example, instead of "A developer proficient in building full-stack applications," try "Backend developer with experience building and deploying RESTful APIs using Java and Python, handling up to X requests per second."</div><div class="feedback">•     * **Keywords:**  Incorporate keywords from the job description (REST APIs, authentication, PostgreSQL, MongoDB, Python, Java, Docker, AWS/GCP) strategically into the summary and project descriptions.  This helps Applicant Tracking Systems (ATS) find his resume.  Currently, his summary lacks these keywords almost entirely.</div><div class="feedback">• </div><div class="feedback">• By implementing these changes, Aniket can significantly improve his resume's effectiveness in securing a backend developer position.  The key is to shift the emphasis from his impressive full-stack abilities towards the specific backend skills and technologies sought by the employer.</div>
+                </div>
+                
+                <div class="section">
+                    <h3>🚀 Actionable Suggestions</h3>
+                    <div class="suggestion">• Consider restructuring your resume to better align with the job description</div><div class="suggestion">• Review the job requirements and add relevant experience</div><div class="suggestion">• Add these important keywords: database, familiar, familiarity, platform, gcp</div><div class="suggestion">• Include more technical skills mentioned in the job description</div><div class="suggestion">• Consider highlighting transferable skills if you lack direct experience</div><div class="suggestion">• Use action verbs and quantifiable achievements</div><div class="suggestion">• Tailor your resume summary to match the job requirements</div><div class="suggestion">• Include relevant certifications or courses</div>
+                </div>
+                
+                <div class="footer">
+                    <p>Generated by Resumetric - AI-Powered Resume Analysis Tool</p>
+                    <p>Report generated on July 01, 2025 at 06:44 PM</p>
+                </div>
+            </div>
+        </body>
+        </html>
+        

@@ -1,6 +1,7 @@
 from flask import current_app
 import os
 import re
+from datetime import datetime
 import google.generativeai as genai
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity
@@ -59,6 +60,7 @@ def analyze():
 
     resume_file = request.files.get('resume')
     jd_text = request.form.get('job_description')
+    send_email = request.form.get('send_email', 'false').lower() == 'true'  # Optional email parameter
 
     if resume_file is None or jd_text is None:
         return jsonify({"error": "Missing resume file or job description"}), 400
@@ -90,11 +92,17 @@ def analyze():
     except Exception as e:
         filler_sentences = [f"Gemini sentence generation failed: {str(e)}"]
 
-    # Email results
-    try:
-        send_result_email(user_email, score, feedback, filler_sentences)
-    except Exception as e:
-        print(f"Email failed to send: {e}")
+    # Email results (only if requested)
+    email_sent = False
+    if send_email:
+        try:
+            send_result_email(user_email, score, feedback, filler_sentences)
+            email_sent = True
+            print(f"Email sent successfully to {user_email}")
+        except Exception as e:
+            print(f"Email failed to send: {e}")
+    else:
+        print("Email sending skipped (not requested)")
 
     # Save analysis to database
     try:
@@ -134,6 +142,7 @@ def analyze():
         "matched_skills": list(matched_skills),
         "suggestions": feedback,
         "generated_lines": filler_sentences,
+        "email_sent": email_sent,
         "analysis_details": {
             "total_keywords_found": len(matched_skills),
             "total_missing_keywords": len(missing_skills),
@@ -250,3 +259,28 @@ def list_reports():
         
     except Exception as e:
         return jsonify({"error": f"Failed to list reports: {str(e)}"}), 500
+
+@routes_bp.route('/send-email', methods=['POST'])
+@jwt_required()
+def send_analysis_email():
+    """Manually send analysis results via email"""
+    user_email = get_jwt_identity()
+    
+    try:
+        # Get the data from the request
+        data = request.get_json()
+        
+        score = data.get('score', 0) / 100  # Convert from percentage
+        suggestions = data.get('suggestions', [])
+        generated_lines = data.get('generated_lines', [])
+        
+        # Send email with analysis results
+        send_result_email(user_email, score, suggestions, generated_lines)
+        
+        return jsonify({
+            "success": True,
+            "message": f"Analysis results sent successfully to {user_email}"
+        })
+        
+    except Exception as e:
+        return jsonify({"error": f"Failed to send email: {str(e)}"}), 500
