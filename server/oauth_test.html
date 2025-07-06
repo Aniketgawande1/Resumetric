@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resumetric - AI-Powered Resume Analysis</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #ffffff;
+            min-height: 100vh;
+            color: #1a1a1a;
+            line-height: 1.6;
+            transition: all 0.3s ease;
+        }
+
+        body.dark-theme {
+            background: #0a0a0a;
+            color: #f5f5f5;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: #1a1a1a;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .dark-theme .theme-toggle {
+            background: #f5f5f5;
+            color: #1a1a1a;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding: 40px 0;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 12px;
+            letter-spacing: -0.03em;
+        }
+
+        .dark-theme .header h1 {
+            color: #f5f5f5;
+        }
+
+        .header .subtitle {
+            font-size: 1.2rem;
+            color: #6b7280;
+            font-weight: 400;
+            margin-bottom: 20px;
+        }
+
+        .dark-theme .header .subtitle {
+            color: #9ca3af;
+        }
+
+        .header .logo {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #4b5563;
+        }
+
+        .dark-theme .header .logo {
+            color: #d1d5db;
+        }
+
+        .card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 32px;
+            margin-bottom: 24px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+            border: 1px solid #f3f4f6;
+            transition: all 0.3s ease;
+        }
+
+        .dark-theme .card {
+            background: #111111;
+            border: 1px solid #1f2937;
+            box-shadow: 0 1px 3px rgba(255, 255, 255, 0.02);
+        }
+
+        .card:hover {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transform: translateY(-2px);
+        }
+
+        .dark-theme .card:hover {
+            box-shadow: 0 4px 20px rgba(255, 255, 255, 0.05);
+        }
+
+        .card h2 {
+            font-size: 1.6rem;
+            color: #1a1a1a;
+            margin-bottom: 24px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .dark-theme .card h2 {
+            color: #f5f5f5;
+        }
+
+        .card h2 i {
+            color: #6b7280;
+            font-size: 1.3rem;
+        }
+
+        .dark-theme .card h2 i {
+            color: #9ca3af;
+        }
+
+        .status-card {
+            background: #1a1a1a;
+            color: white;
+            text-align: center;
+            border: none;
+        }
+
+        .dark-theme .status-card {
+            background: #f5f5f5;
+            color: #1a1a1a;
+        }
+
+        .status-card h2 {
+            color: white;
+        }
+
+        .dark-theme .status-card h2 {
+            color: #1a1a1a;
+        }
+
+        .status-card h2 i {
+            color: #d1d5db;
+        }
+
+        .dark-theme .status-card h2 i {
+            color: #6b7280;
+        }
+
+        .auth-status {
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-bottom: 20px;
+        }
+
+        .user-info {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .dark-theme .user-info {
+            background: rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(0, 0, 0, 0.2);
+        }
+
+        .user-info img {
+            border: 3px solid white;
+            border-radius: 50%;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .dark-theme .user-info img {
+            border: 3px solid #1a1a1a;
+        }
+
+        .login-btn {
+            background: #1a1a1a;
+            color: white;
+            padding: 14px 28px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            margin: 8px;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .dark-theme .login-btn {
+            background: #f5f5f5;
+            color: #1a1a1a;
+        }
+
+        .login-btn:hover {
+            background: #2d2d2d;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .dark-theme .login-btn:hover {
+            background: #e5e5e5;
+            box-shadow: 0 8px 25px rgba(255, 255, 255, 0.1);
+        }
+
+        .login-btn:active {
+            transform: translateY(0);
+        }
+
+        .login-btn.logout {
+            background: #ef4444;
+        }
+
+        .login-btn.logout:hover {
+            background: #dc2626;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #4b5563;
+            font-size: 0.95rem;
+        }
+
+        .dark-theme .form-group label {
+            color: #d1d5db;
+        }
+
+        .form-group input[type="file"],
+        .form-group textarea {
+            width: 100%;
+            padding: 16px;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #ffffff;
+            font-family: inherit;
+        }
+
+        .dark-theme .form-group input[type="file"],
+        .dark-theme .form-group textarea {
+            background: #1f2937;
+            border: 1px solid #374151;
+            color: #f5f5f5;
+        }
+
+        .form-group input[type="file"]:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #1a1a1a;
+            box-shadow: 0 0 0 3px rgba(26, 26, 26, 0.1);
+        }
+
+        .dark-theme .form-group input[type="file"]:focus,
+        .dark-theme .form-group textarea:focus {
+            border-color: #f5f5f5;
+            box-shadow: 0 0 0 3px rgba(245, 245, 245, 0.1);
+        }
+
+        .checkbox-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 0;
+        }
+
+        .checkbox-wrapper input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #1a1a1a;
+        }
+
+        .dark-theme .checkbox-wrapper input[type="checkbox"] {
+            accent-color: #f5f5f5;
+        }
+
+        .checkbox-wrapper label {
+            margin: 0;
+            font-size: 0.95rem;
+        }
+
+        .error {
+            background: #ef4444;
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 16px 0;
+            animation: slideIn 0.3s ease;
+            border: none;
+        }
+
+        .success {
+            background: #10b981;
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 16px 0;
+            animation: slideIn 0.3s ease;
+            border: none;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .analysis-result {
+            background: #f9fafb;
+            color: #1a1a1a;
+            padding: 24px;
+            border-radius: 16px;
+            margin-top: 20px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .dark-theme .analysis-result {
+            background: #1f2937;
+            color: #f5f5f5;
+            border: 1px solid #374151;
+        }
+
+        .analysis-result h3 {
+            margin-bottom: 20px;
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+
+        .dark-theme .analysis-result h3 {
+            color: #f5f5f5;
+        }
+
+        .result-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .result-item {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid #e5e7eb;
+            transition: all 0.3s ease;
+        }
+
+        .dark-theme .result-item {
+            background: #111111;
+            border: 1px solid #374151;
+        }
+
+        .result-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .dark-theme .result-item:hover {
+            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.05);
+        }
+
+        .result-value {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: #1a1a1a;
+        }
+
+        .dark-theme .result-value {
+            color: #f5f5f5;
+        }
+
+        .result-label {
+            font-size: 0.9rem;
+            color: #6b7280;
+            font-weight: 500;
+        }
+
+        .dark-theme .result-label {
+            color: #9ca3af;
+        }
+
+        .setup-steps {
+            background: #f9fafb;
+            padding: 24px;
+            border-radius: 16px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .dark-theme .setup-steps {
+            background: #1f2937;
+            border: 1px solid #374151;
+        }
+
+        .setup-steps ol {
+            padding-left: 24px;
+        }
+
+        .setup-steps li {
+            margin-bottom: 12px;
+            padding: 6px 0;
+            color: #4b5563;
+        }
+
+        .dark-theme .setup-steps li {
+            color: #d1d5db;
+        }
+
+        .setup-steps a {
+            color: #1a1a1a;
+            text-decoration: underline;
+            font-weight: 500;
+        }
+
+        .dark-theme .setup-steps a {
+            color: #f5f5f5;
+        }
+
+        .setup-steps a:hover {
+            color: #000;
+        }
+
+        .dark-theme .setup-steps a:hover {
+            color: #fff;
+        }
+
+        .setup-steps code {
+            background: #e5e7eb;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 0.85rem;
+        }
+
+        .dark-theme .setup-steps code {
+            background: #374151;
+            color: #f5f5f5;
+        }
+
+        .keyword-cloud {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .keyword-tag {
+            background: #1a1a1a;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .dark-theme .keyword-tag {
+            background: #f5f5f5;
+            color: #1a1a1a;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            color: #6b7280;
+        }
+
+        .dark-theme .loading {
+            color: #9ca3af;
+        }
+
+        .loading i {
+            animation: spin 1s linear infinite;
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 16px;
+            }
+
+            .header h1 {
+                font-size: 2.2rem;
+            }
+
+            .card {
+                padding: 20px;
+                border-radius: 16px;
+            }
+
+            .result-grid {
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+                gap: 12px;
+            }
+
+            .theme-toggle {
+                top: 16px;
+                right: 16px;
+                width: 44px;
+                height: 44px;
+            }
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin-top: 24px;
+        }
+
+        .feature-item {
+            margin-bottom: 16px;
+        }
+
+        .feature-item h4 {
+            color: #495057;
+            margin-bottom: 4px;
+            font-weight: 500;
+            font-size: 1rem;
+        }
+
+        .feature-item p {
+            color: #6c757d;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Google Sign-In Button Styling */
+        .g_id_signin {
+            margin: 12px 0;
+        }
+
+        h3 {
+            color: #495057;
+            margin-bottom: 12px;
+            font-weight: 500;
+            font-size: 1.1rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .card {
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            
+            .container {
+                padding: 16px;
+            }
+
+            .result-grid {
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            }
+        }
+    </style>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body>
+    <button class="theme-toggle" onclick="toggleTheme()">
+        <i class="fas fa-moon" id="theme-icon"></i>
+    </button>
+
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+                <i class="fas fa-brain"></i>
+            </div>
+            <h1>Resumetric</h1>
+            <p class="subtitle">AI-Powered Resume Analysis & Optimization</p>
+        </div>
+
+        <!-- Authentication Status -->
+        <div class="card status-card">
+            <h2><i class="fas fa-shield-alt"></i> Authentication Status</h2>
+            <div class="auth-status" id="auth-status">Checking authentication...</div>
+            <div id="user-info" style="display: none;">
+                <div class="user-info">
+                    <img id="user-avatar" src="" alt="User Avatar" width="60" height="60" style="border-radius: 50%; margin-right: 15px; vertical-align: middle;">
+                    <div style="display: inline-block; vertical-align: middle;">
+                        <div id="user-name" style="font-weight: 600; font-size: 1.1rem; margin-bottom: 4px;"></div>
+                        <div id="user-email" style="opacity: 0.8;"></div>
+                    </div>
+                </div>
+            </div>
+            <div id="login-buttons">
+                <a href="/auth/google" class="login-btn">
+                    <i class="fab fa-google"></i> Login with Google
+                </a>
+                <button class="login-btn" onclick="testClientSideAuth()">
+                    <i class="fas fa-mobile-alt"></i> Test Client-Side Auth
+                </button>
+                <button class="login-btn logout" onclick="logout()" style="display: none;" id="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+        </div>
+
+        <!-- Resume Analysis -->
+        <div class="card">
+            <h2><i class="fas fa-file-alt"></i> Resume Analysis</h2>
+            <form id="resume-form" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="resume">Upload Resume (PDF):</label>
+                    <input type="file" id="resume" name="resume" accept=".pdf" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="job-description">Job Description (Optional):</label>
+                    <textarea id="job-description" name="job_description" rows="4" placeholder="Paste the job description here to get targeted analysis..."></textarea>
+                </div>
+
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" id="send-email" name="send_email">
+                    <label for="send-email">Send analysis report via email</label>
+                </div>
+
+                <button type="submit" class="login-btn">
+                    <i class="fas fa-chart-line"></i> Analyze Resume
+                </button>
+            </form>
+
+            <div class="loading" id="loading">
+                <i class="fas fa-spinner"></i>
+                <div>Analyzing your resume...</div>
+            </div>
+
+            <div id="analysis-result" style="display: none;"></div>
+        </div>
+
+        <!-- Setup Instructions -->
+        <div class="card">
+            <h2><i class="fas fa-cogs"></i> Setup Instructions</h2>
+            <div class="setup-steps">
+                <h3>OAuth Setup</h3>
+                <ol>
+                    <li>Create a Google Cloud Project at <a href="https://console.cloud.google.com/" target="_blank">Google Cloud Console</a></li>
+                    <li>Enable the Google+ API and Gmail API</li>
+                    <li>Create OAuth 2.0 credentials (Web application)</li>
+                    <li>Add your domain to authorized origins: <code>http://localhost:5000</code></li>
+                    <li>Add redirect URI: <code>http://localhost:5000/auth/callback</code></li>
+                    <li>Download the credentials JSON and save as <code>client_secret.json</code></li>
+                    <li>Run <code>bash setup_oauth.sh</code> to install dependencies and set up environment</li>
+                    <li>Create a <code>.env</code> file with your configuration</li>
+                </ol>
+
+                <h3 style="margin-top: 20px;">Environment Variables</h3>
+                <p>Create a <code>.env</code> file with:</p>
+                <pre style="background: #f3f4f6; padding: 15px; border-radius: 8px; margin-top: 10px; font-size: 0.85rem; overflow-x: auto;">
+GOOGLE_CLIENT_ID=your_google_client_id
+GOOGLE_CLIENT_SECRET=your_google_client_secret
+GOOGLE_REDIRECT_URI=http://localhost:5000/auth/callback
+SECRET_KEY=your_secret_key_here
+MONGODB_URI=mongodb://localhost:27017/resumetric
+GEMINI_API_KEY=your_gemini_api_key
+EMAIL_USER=your_email@gmail.com
+EMAIL_PASS=your_app_password</pre>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentUser = null;
+
+        // Theme toggle functionality
+        function toggleTheme() {
+            const body = document.body;
+            const themeIcon = document.getElementById('theme-icon');
+            
+            body.classList.toggle('dark-theme');
+            
+            if (body.classList.contains('dark-theme')) {
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+                localStorage.setItem('theme', 'light');
+            }
+        }
+
+        // Load saved theme
+        function loadTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            const themeIcon = document.getElementById('theme-icon');
+            
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark-theme');
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            }
+        }
+
+        // Check authentication status
+        async function checkAuth() {
+            try {
+                const response = await fetch('/auth/user');
+                const data = await response.json();
+                
+                if (data.authenticated) {
+                    updateAuthStatus(true, data.user);
+                } else {
+                    updateAuthStatus(false);
+                }
+            } catch (error) {
+                console.error('Auth check failed:', error);
+                updateAuthStatus(false);
+            }
+        }
+
+        function updateAuthStatus(isAuthenticated, user = null) {
+            const authStatus = document.getElementById('auth-status');
+            const userInfo = document.getElementById('user-info');
+            const loginButtons = document.getElementById('login-buttons');
+            const logoutBtn = document.getElementById('logout-btn');
+
+            if (isAuthenticated && user) {
+                currentUser = user;
+                authStatus.textContent = 'Authenticated ✓';
+                
+                document.getElementById('user-name').textContent = user.name;
+                document.getElementById('user-email').textContent = user.email;
+                document.getElementById('user-avatar').src = user.picture;
+                
+                userInfo.style.display = 'block';
+                logoutBtn.style.display = 'inline-flex';
+                
+                // Hide login buttons
+                const loginBtns = loginButtons.querySelectorAll('.login-btn:not(.logout)');
+                loginBtns.forEach(btn => btn.style.display = 'none');
+            } else {
+                currentUser = null;
+                authStatus.textContent = 'Not authenticated';
+                userInfo.style.display = 'none';
+                logoutBtn.style.display = 'none';
+                
+                // Show login buttons
+                const loginBtns = loginButtons.querySelectorAll('.login-btn:not(.logout)');
+                loginBtns.forEach(btn => btn.style.display = 'inline-flex');
+            }
+        }
+
+        async function logout() {
+            try {
+                await fetch('/auth/logout', { method: 'POST' });
+                updateAuthStatus(false);
+                showMessage('Logged out successfully!', 'success');
+            } catch (error) {
+                console.error('Logout failed:', error);
+                showMessage('Logout failed', 'error');
+            }
+        }
+
+        async function testClientSideAuth() {
+            showMessage('Client-side auth not implemented yet. Use server-side login.', 'error');
+        }
+
+        // Resume analysis
+        document.getElementById('resume-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            if (!currentUser) {
+                showMessage('Please login first to analyze resume', 'error');
+                return;
+            }
+
+            const formData = new FormData();
+            const resumeFile = document.getElementById('resume').files[0];
+            const jobDescription = document.getElementById('job-description').value;
+            const sendEmail = document.getElementById('send-email').checked;
+
+            if (!resumeFile) {
+                showMessage('Please select a resume file', 'error');
+                return;
+            }
+
+            formData.append('resume', resumeFile);
+            if (jobDescription) {
+                formData.append('job_description', jobDescription);
+            }
+            formData.append('send_email', sendEmail);
+
+            const loading = document.getElementById('loading');
+            const resultDiv = document.getElementById('analysis-result');
+            
+            loading.style.display = 'block';
+            resultDiv.style.display = 'none';
+
+            try {
+                const response = await fetch('/analyze', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    displayAnalysisResult(result);
+                    showMessage('Resume analyzed successfully!', 'success');
+                } else {
+                    throw new Error(result.error || 'Analysis failed');
+                }
+            } catch (error) {
+                console.error('Analysis failed:', error);
+                showMessage(`Analysis failed: ${error.message}`, 'error');
+            } finally {
+                loading.style.display = 'none';
+            }
+        });
+
+        function displayAnalysisResult(result) {
+            const resultDiv = document.getElementById('analysis-result');
+            
+            const analysis = result.analysis;
+            const keywordHtml = analysis.keywords ? 
+                `<div class="keyword-cloud">
+                    ${analysis.keywords.map(keyword => `<span class="keyword-tag">${keyword}</span>`).join('')}
+                </div>` : '';
+
+            resultDiv.innerHTML = `
+                <div class="analysis-result">
+                    <h3><i class="fas fa-chart-bar"></i> Analysis Results</h3>
+                    
+                    <div class="result-grid">
+                        <div class="result-item">
+                            <div class="result-value">${analysis.overall_score || 'N/A'}</div>
+                            <div class="result-label">Overall Score</div>
+                        </div>
+                        <div class="result-item">
+                            <div class="result-value">${analysis.ats_score || 'N/A'}</div>
+                            <div class="result-label">ATS Score</div>
+                        </div>
+                        <div class="result-item">
+                            <div class="result-value">${analysis.match_percentage || 'N/A'}%</div>
+                            <div class="result-label">Job Match</div>
+                        </div>
+                        <div class="result-item">
+                            <div class="result-value">${analysis.keywords?.length || 0}</div>
+                            <div class="result-label">Keywords Found</div>
+                        </div>
+                    </div>
+
+                    ${keywordHtml}
+
+                    ${analysis.summary ? `
+                        <div style="margin-top: 20px; padding: 16px; background: rgba(26, 26, 26, 0.05); border-radius: 8px;">
+                            <h4 style="margin-bottom: 8px;">Summary:</h4>
+                            <p>${analysis.summary}</p>
+                        </div>
+                    ` : ''}
+
+                    ${result.report_saved ? `
+                        <div style="margin-top: 16px; padding: 12px; background: rgba(16, 185, 129, 0.1); border-radius: 8px; color: #059669;">
+                            <i class="fas fa-check-circle"></i> Report saved to database
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+
+            resultDiv.style.display = 'block';
+        }
+
+        function showMessage(message, type) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = type;
+            messageDiv.innerHTML = `<i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-triangle'}"></i> ${message}`;
+            
+            document.body.appendChild(messageDiv);
+            
+            setTimeout(() => {
+                messageDiv.remove();
+            }, 5000);
+        }
+
+        // Initialize
+        window.addEventListener('load', function() {
+            loadTheme();
+            checkAuth();
+        });
+    </script>
+</body>
+</html>

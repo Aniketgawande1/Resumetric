@@ -7,3 +7,7 @@ PyMuPDF
 spacy
 scikit-learn
 google-generativeai
+google-auth
+google-auth-oauthlib
+google-auth-httplib2
+requests
