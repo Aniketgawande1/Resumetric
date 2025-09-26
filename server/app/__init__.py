@@ -3,6 +3,7 @@ from flask_cors import CORS
 from flask_mail import Mail
 from flask_jwt_extended import JWTManager
 from pymongo import MongoClient
+import certifi
 import os
 import secrets
 from dotenv import load_dotenv
@@ -15,7 +16,7 @@ def create_app():
     app = Flask(__name__)
     
     # CORS configuration for Google OAuth
-    CORS(app, origins=["http://localhost:3000", "http://localhost:5000"], supports_credentials=True)
+    CORS(app, origins=["http://localhost:3000", "http://localhost:5000", "http://localhost:5173"], supports_credentials=True)
     
     # Secret key for sessions
     app.config['SECRET_KEY'] = os.getenv("SECRET_KEY", secrets.token_hex(16))
@@ -38,8 +39,24 @@ def create_app():
     mongo_db_name = os.getenv("MONGO_DB", "resumetric")
     if mongo_uri:
         try:
-            client = MongoClient(mongo_uri)
+            client_kwargs = {
+                "serverSelectionTimeoutMS": int(os.getenv("MONGO_TIMEOUT_MS", "10000"))
+            }
+
+            # Ensure CA bundle is provided for TLS connections (e.g., MongoDB Atlas)
+            try:
+                client_kwargs["tlsCAFile"] = certifi.where()
+            except Exception as ca_error:
+                print(f"Warning: Could not load CA bundle for MongoDB TLS verification: {ca_error}")
+
+            if os.getenv("MONGO_TLS_ALLOW_INVALID", "").lower() in {"1", "true", "yes"}:
+                client_kwargs["tlsAllowInvalidCertificates"] = True
+                print("Warning: MongoDB TLS certificate verification is disabled via MONGO_TLS_ALLOW_INVALID.")
+
+            client = MongoClient(mongo_uri, **client_kwargs)
             app.mongo = client[mongo_db_name]
+            # Trigger server selection early to surface TLS/connection issues fast
+            app.mongo.command('ping')
         except Exception as e:
             print(f"MongoDB connection failed: {e}")
             app.mongo = None

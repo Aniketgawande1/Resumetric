@@ -15,14 +15,14 @@ reset_tokens = {}  # Store password reset tokens
 
 def get_user_collection():
     """Get MongoDB user collection if available"""
-    if hasattr(current_app, 'mongo') and current_app.mongo:
+    if hasattr(current_app, 'mongo') and current_app.mongo is not None:
         return current_app.mongo.users
     return None
 
 def store_user(user_data):
     """Store user in database or memory"""
     collection = get_user_collection()
-    if collection:
+    if collection is not None:
         collection.insert_one(user_data)
     else:
         users_db[user_data['email']] = user_data
@@ -30,7 +30,7 @@ def store_user(user_data):
 def get_user(email):
     """Get user from database or memory"""
     collection = get_user_collection()
-    if collection:
+    if collection is not None:
         return collection.find_one({"email": email})
     else:
         return users_db.get(email)
@@ -38,7 +38,7 @@ def get_user(email):
 def update_user(email, update_data):
     """Update user in database or memory"""
     collection = get_user_collection()
-    if collection:
+    if collection is not None:
         collection.update_one({"email": email}, {"$set": update_data})
     else:
         if email in users_db:
