@@ -1,0 +1,14 @@
+services:
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    env_file:
+      - ./server/.env
+    ports:
+      - "5000:5000"
+    restart: unless-stopped
+
+# Frontend is run locally with npm (no Docker). From ./client:
+#   npm install && npm run dev
+# Ensure VITE_API_BASE_URL is http://localhost:5000 (default in code)

@@ -16,7 +16,12 @@ def create_app():
     app = Flask(__name__)
     
     # CORS configuration for Google OAuth
-    CORS(app, origins=["http://localhost:3000", "http://localhost:5000", "http://localhost:5173"], supports_credentials=True)
+    CORS(app, origins=[
+        "http://localhost:3000",
+        "http://localhost:5000",
+        "http://localhost:5173",  # Vite dev
+        "http://localhost:4173"   # Vite preview (container runtime)
+    ], supports_credentials=True)
     
     # Secret key for sessions
     app.config['SECRET_KEY'] = os.getenv("SECRET_KEY", secrets.token_hex(16))
