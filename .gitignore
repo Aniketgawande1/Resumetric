@@ -1,3 +1,36 @@
 .env
+# Additional env patterns (client/server and nested)
+.env.*
+.flaskenv
+.envrc
+.secrets
+client/.env
+client/.env.*
+server/.env
+server/.env.*
+# Allow example env templates to be committed
+!.env.example
+!**/.env.example
+!client/.env.example
+!server/.env.example
 test_models.py
 aniketresume.pdf
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.sqlite3
+db.sqlite3
+*.log
+*.DS_Store
+*.egg-info/
+venv/
+env/
+.idea/
+.vscode/
+node_modules/
+dist/
+build/
+*.bak
+*.swp
+*.swo
